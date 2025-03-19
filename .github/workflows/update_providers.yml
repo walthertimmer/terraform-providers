@@ -51,5 +51,5 @@ jobs:
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
           git add .
-          git commit -m "Update providers: AzureRM v${{ github.event.inputs.azurerm_version }}, Time v${{ github.event.inputs.time_version }}", Databricks v${{ github.event.inputs.databricks_version }}"
+          git commit -m "Update providers: AzureRM v${{ github.event.inputs.azurerm_version }}, Time v${{ github.event.inputs.time_version }}, Databricks v${{ github.event.inputs.databricks_version }}"
           git push
