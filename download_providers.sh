@@ -44,13 +44,23 @@ setup_provider() {
         
         # Download URL for official Terraform providers
         DOWNLOAD_URL="https://releases.hashicorp.com/terraform-provider-$provider_name/$provider_version/terraform-provider-${provider_name}_${provider_version}_${platform}.zip"
+
+        ZIP_PATH="$BASE_DIR/terraform-provider-$provider_name/$provider_version/download/$os/$arch/terraform-provider-${provider_name}_${provider_version}_${os}_${arch}.zip"
+        EXTRACT_DIR="$BASE_DIR/terraform-provider-$provider_name/$provider_version/download/$os/$arch"
         
         echo "Downloading $provider_name provider $provider_version for $platform..."
         curl -L "$DOWNLOAD_URL" -o "$BASE_DIR/terraform-provider-$provider_name/$provider_version/download/$os/$arch/terraform-provider-${provider_name}_${provider_version}_${platform}.zip"
         
+            # Extract the zip file
+        unzip -o "$ZIP_PATH" -d "$EXTRACT_DIR"
+
+        # Make the binary executable
+        chmod +x "$EXTRACT_DIR/terraform-provider-${provider_name}_v${provider_version}"
+
         # Download SHA256SUMS
         SUMS_URL="https://releases.hashicorp.com/terraform-provider-$provider_name/$provider_version/terraform-provider-${provider_name}_${provider_version}_SHA256SUMS"
         curl -L "$SUMS_URL" -o "$BASE_DIR/terraform-provider-$provider_name/$provider_version/download/$os/$arch/SHA256SUMS"
+
     done
     
     # Create provider version JSON file
