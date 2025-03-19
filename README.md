@@ -36,8 +36,8 @@ provider_installation {
 
 ## Available Providers
 
-- AzureRM: v3.75.0 (update this to the actual version you've published)
-- Time: v0.9.1 (update this to the actual version you've published)
+- AzureRM: v4.26.0
+- Time: v10.0.0
 
 ## Adding New Providers or Versions
 
