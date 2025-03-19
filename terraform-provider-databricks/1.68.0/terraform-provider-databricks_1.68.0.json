@@ -1,0 +1,7 @@
+{
+  "version": "1.68.0",
+  "protocols": ["5.0"],
+  "platforms": [
+    {"os": "linux", "arch": "amd64"}
+  ]
+}
