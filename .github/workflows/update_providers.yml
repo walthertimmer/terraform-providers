@@ -12,6 +12,10 @@ on:
         description: 'Time Provider Version'
         required: true
         default: '10.0.0'
+      databricks_version:
+        description: 'Databricks Provider Version'
+        required: true
+        default: '1.68.0'
 
 jobs:
   update-providers:
@@ -26,6 +30,7 @@ jobs:
         run: |
           sed -i "s/AZURERM_VERSION=\".*\"/AZURERM_VERSION=\"${{ github.event.inputs.azurerm_version }}\"/" download_providers.sh
           sed -i "s/TIME_VERSION=\".*\"/TIME_VERSION=\"${{ github.event.inputs.time_version }}\"/" download_providers.sh
+          sed -i "s/DATABRICKS_VERSION=\".*\"/DATABRICKS_VERSION=\"${{ github.event.inputs.databricks_version }}\"/" download_providers.sh
       
       - name: Run provider download script
         run: |
@@ -36,13 +41,15 @@ jobs:
         run: |
           sed -i "s/AzureRM: v.*/AzureRM: v${{ github.event.inputs.azurerm_version }}/" README.md
           sed -i "s/Time: v.*/Time: v${{ github.event.inputs.time_version }}/" README.md
+          sed -i "s/Databricks: v.*/Databricks: v${{ github.event.inputs.databricks_version }}/" README.md
           sed -i "s/version = \"[0-9]\+\.[0-9]\+\.[0-9]\+\" # Or whichever version.*azurerm/version = \"${{ github.event.inputs.azurerm_version }}\" # Or whichever version you've mirrored/" README.md
           sed -i "s/version = \"[0-9]\+\.[0-9]\+\.[0-9]\+\" # Or whichever version.*time/version = \"${{ github.event.inputs.time_version }}\" # Or whichever version you've mirrored/" README.md
+          sed -i "s/version = \"[0-9]\+\.[0-9]\+\.[0-9]\+\" # Or whichever version.*databricks/version = \"${{ github.event.inputs.databricks_version }}\" # Or whichever version you've mirrored/" README.md
       
       - name: Commit and push changes
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
           git add .
-          git commit -m "Update providers: AzureRM v${{ github.event.inputs.azurerm_version }}, Time v${{ github.event.inputs.time_version }}"
+          git commit -m "Update providers: AzureRM v${{ github.event.inputs.azurerm_version }}, Time v${{ github.event.inputs.time_version }}", Databricks v${{ github.event.inputs.databricks_version }}"
           git push

@@ -5,6 +5,7 @@
 # Configuration
 AZURERM_VERSION="4.26.0"  # Update to desired version
 TIME_VERSION="10.0.0"      # Update to desired version
+DATABRICKS_VERSION="1.68.0"  # Update to desired version
 PLATFORMS=("linux_amd64")
 BASE_DIR="$(pwd)"
 
@@ -12,6 +13,19 @@ BASE_DIR="$(pwd)"
 setup_provider() {
     local provider_name=$1
     local provider_version=$2
+    local provider_namespace=$3  # Optional namespace parameter, defaults to hashicorp
+
+    if [ -z "$provider_namespace" ]; then
+        provider_namespace="hashicorp"
+        download_url_base="https://releases.hashicorp.com"
+    else
+        # For non-HashiCorp providers, use the Terraform Registry API
+        download_url_base="https://releases.hashicorp.com"
+        if [ "$provider_namespace" != "hashicorp" ]; then
+            echo "Using Terraform Registry API for $provider_namespace/$provider_name"
+            download_url_base="https://releases.hashicorp.com"
+        fi
+    fi
     
     for platform in "${PLATFORMS[@]}"; do
         os=$(echo $platform | cut -d'_' -f1)
@@ -54,5 +68,8 @@ setup_provider "azurerm" "$AZURERM_VERSION"
 
 echo "Setting up Time provider..."
 setup_provider "time" "$TIME_VERSION"
+
+echo "Setting up Databricks provider..."
+setup_provider "databricks" "$DATABRICKS_VERSION" "databricks"
 
 echo "Done! Provider files are ready for commit to your GitHub repository."
