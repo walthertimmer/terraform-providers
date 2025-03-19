@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Error><Code>NoSuchKey</Code><Message>The specified key does not exist.</Message><Key>terraform-provider-azurerm/4.26.0/terraform-provider-azurerm_4.26.0_darwin_amd64.zip</Key><RequestId>MD89BXGYJ9MR41GE</RequestId><HostId>Cjg/IMM4MBHd7++rPnjrXUDLpMq1JY6+l+QJgSZCRn080eb7plPkLaP0oC8KxB8Ib0NGnqLnXh0=</HostId></Error>
+<Error><Code>NoSuchKey</Code><Message>The specified key does not exist.</Message><Key>terraform-provider-azurerm/4.26.0/terraform-provider-azurerm_4.26.0_darwin_amd64.zip</Key><RequestId>RV0TDEP1MFC6KE0D</RequestId><HostId>1ahRxQ9p0f+0njO0spZH0CyrKOKNMFCb676DhD+hbcjpevbAKvECO4uOUSB6RJJcLKgW/m3eupw=</HostId></Error>
