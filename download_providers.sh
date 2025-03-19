@@ -6,7 +6,7 @@
 AZURERM_VERSION="4.26.0"  # Update to desired version
 TIME_VERSION="10.0.0"      # Update to desired version
 DATABRICKS_VERSION="1.68.0"  # Update to desired version
-PLATFORMS=("linux_amd64")
+PLATFORMS=("linux_amd64" "windows_amd64" "darwin_amd64")
 BASE_DIR="$(pwd)"
 
 # Create directory structure for AzureRM provider
@@ -30,6 +30,15 @@ setup_provider() {
     for platform in "${PLATFORMS[@]}"; do
         os=$(echo $platform | cut -d'_' -f1)
         arch=$(echo $platform | cut -d'_' -f2)
+
+        # Add platform to JSON
+        if [ "$os" == "linux" ] && [ "$arch" == "amd64" ]; then
+            platforms_json+=$'\n    {"os": "linux", "arch": "amd64"},'
+        elif [ "$os" == "windows" ] && [ "$arch" == "amd64" ]; then
+            platforms_json+=$'\n    {"os": "windows", "arch": "amd64"},'
+        elif [ "$os" == "darwin" ] && [ "$arch" == "amd64" ]; then
+            platforms_json+=$'\n    {"os": "darwin", "arch": "amd64"},'
+        fi
         
         mkdir -p "$BASE_DIR/terraform-provider-$provider_name/$provider_version/download/$os/$arch"
         
@@ -49,9 +58,7 @@ setup_provider() {
 {
   "version": "$provider_version",
   "protocols": ["5.0"],
-  "platforms": [
-    {"os": "linux", "arch": "amd64"}
-  ]
+  "platforms": $platforms_json
 }
 EOF
 
